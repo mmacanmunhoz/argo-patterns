@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix: 
+        generators:
+          - git:
+              repoURL: https://github.com/mmacanmunhoz/argo-patterns.git
+              revision: main
+              directories:
+              - path: apps/*/helm
+              # - path: apps/nginx/*
+              #   exclude: true
+          - git:
+              repoURL: https://github.com/mmacanmunhoz/argo-patterns.git
+              revision: main
+              pathParamPrefix: cfg
+              files:
+                - path: apps/config/dev.json
+
+  template:
+    metadata:
+      name: '{{index .path.segments 1}}-{{.cluster.name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/mmacanmunhoz/argo-patterns.git
+        targetRevision: fix/teste
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{index .path.segments 1}}'
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
