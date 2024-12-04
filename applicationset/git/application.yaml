@@ -9,7 +9,7 @@ spec:
   generators:
   - git:
       repoURL: https://github.com/mmacanmunhoz/argo-patterns.git
-      revision: main
+      revision: fix/teste
       directories:
       - path: apps/*/helm
       - path: apps/nginx/*
@@ -21,7 +21,7 @@ spec:
       project: "default"
       source:
         repoURL: https://github.com/mmacanmunhoz/argo-patterns.git
-        targetRevision: main
+        targetRevision: fix/teste
         path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
