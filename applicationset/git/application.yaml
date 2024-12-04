@@ -12,8 +12,8 @@ spec:
       revision: fix/teste
       directories:
       - path: apps/*/helm
-      - path: apps/nginx/*
-        exclude: true
+      # - path: apps/nginx/*
+      #   exclude: true
   template:
     metadata:
       name: '{{index .path.segments 1}}'
