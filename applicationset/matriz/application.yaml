@@ -14,14 +14,14 @@ spec:
               revision: main
               directories:
               - path: apps/*/helm
-              # - path: apps/nginx/*
-              #   exclude: true
+              - path: apps/nginx/*
+                exclude: true  # segue sendo o git generator padrão
           - git:
               repoURL: https://github.com/mmacanmunhoz/argo-patterns.git
               revision: main
               pathParamPrefix: cfg
               files:
-                - path: apps/config/dev.json
+                - path: apps/config/dev.json # aqui é somente para que eu possa pegar o nome e preencher no template, posso usar metadata
 
   template:
     metadata:
